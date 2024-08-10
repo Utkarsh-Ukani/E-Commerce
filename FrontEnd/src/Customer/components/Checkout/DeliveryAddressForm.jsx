@@ -1,6 +1,6 @@
 import { Box, Button, Grid, TextField } from "@mui/material";
 import React from "react";
-import AddressCard from "../../AddressCard/AddressCard";
+import AddressCard from "../AddressCard/AddressCard";
 
 const DeliveryAddressForm = () => {
     const handleSubmit=(e)=>{
