@@ -154,7 +154,7 @@ export default function ProductDetails() {
               {/* Reviews */}
               <div className="mt-6">
                 <div className="flex items-center space-x-3">
-                  <Rating name="read-only" value={4.5} readOnly />
+                  <Rating name="read-only" value={4.5} readOnly precision={0.5} />
                   <p className="opacity-50 text-sm">56740 Ratings</p>
                   <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     3870 Reviews
@@ -284,7 +284,7 @@ export default function ProductDetails() {
                 <h1 className="text-xl font-semibold pb-2">Product Ratings</h1>
 
                 <div className="flex items-center space-x-3">
-                  <Rating value={4.6} precision={0.5} readOnly />
+                  <Rating value={4.5} precision={0.5} readOnly />
                   <p className="opacity-60">54740 Ratings</p>
                 </div>
 
