@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StarIcon } from "@heroicons/react/20/solid";
 import { Radio, RadioGroup } from "@headlessui/react";
 import { Box, Button, Grid, LinearProgress, Rating } from "@mui/material";
 import ProductReviewCard from "./ProductReviewCard";
 import { mens_kurta } from "../../../Data/mens_kurta";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { findProductById } from "../../../State/Product/Action";
+import { addItemToCart } from "../../../State/Cart/Action";
+
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -62,12 +66,22 @@ function classNames(...classes) {
 }
 
 export default function ProductDetails() {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
-  const navigate = useNavigate()
-  const handleAddToCart = ()=>{
-    navigate("/cart")
-  }
+  const [selectedSize, setSelectedSize] = useState("");
+  const navigate = useNavigate();
+  const params = useParams();
+  const dispatch = useDispatch();
+  const { products } = useSelector((store) => store);
+
+  useEffect(() => {
+    const data = { productId: params.productId };
+    dispatch(findProductById(data));
+  }, [params.productId]);
+
+  const handleAddToCart = () => {
+    const data = {productId:params.productId,size:selectedSize.name}
+    dispatch(addItemToCart(data))
+    navigate("/cart");
+  };
   return (
     <div className="bg-white lg:px-20">
       <div className="pt-6">
@@ -115,8 +129,8 @@ export default function ProductDetails() {
           <div className="flex flex-col items-center">
             <div className="overflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
               <img
-                alt={product.images[0].alt}
-                src={product.images[0].src}
+                alt=""
+                src={products.product?.imageUrl}
                 className="h-full w-full object-cover object-center"
               />
             </div>
@@ -137,10 +151,10 @@ export default function ProductDetails() {
           <div className="lg:col-span-1 maxt-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8 lg:pb-24">
             <div className="lg:col-span-2">
               <h1 className="text-lg lg:text-xl font-semibold text-gray-900">
-                Holly Roman
+                {products.product?.brand}
               </h1>
               <h1 className="text-lg lg:text-xl text-gray-900 opacity-60 pt-1">
-                Casual Tees Solid
+                {products.product?.title}
               </h1>
             </div>
 
@@ -149,16 +163,25 @@ export default function ProductDetails() {
               <h2 className="sr-only">Product information</h2>
 
               <div className="flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6">
-                ₹199
+                {products.product?.discountedPrice}
                 <p className="font-semibold"></p>
-                <p className="opacity-50 line-through">₹211</p>
-                <p className="text-green-600 font-semibold">5% off</p>
+                <p className="opacity-50 line-through">
+                  ₹{products.product?.price}
+                </p>
+                <p className="text-green-600 font-semibold">
+                  {products.product?.discountPersent}% off
+                </p>
               </div>
 
               {/* Reviews */}
               <div className="mt-6">
                 <div className="flex items-center space-x-3">
-                  <Rating name="read-only" value={4.5} readOnly precision={0.5} />
+                  <Rating
+                    name="read-only"
+                    value={4.5}
+                    readOnly
+                    precision={0.5}
+                  />
                   <p className="opacity-50 text-sm">56740 Ratings</p>
                   <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
                     3870 Reviews
@@ -166,7 +189,7 @@ export default function ProductDetails() {
                 </div>
               </div>
 
-              <form className="mt-10">
+              <form  className="mt-10">
                 {/* Sizes */}
                 <div className="mt-10">
                   <div className="flex items-center justify-between">
@@ -227,7 +250,12 @@ export default function ProductDetails() {
                 <Button
                   onClick={handleAddToCart}
                   variant="contained"
-                  sx={{marginTop:"3%", px: "2rem", py: "1rem", bgcolor: "#9155fd" }}
+                  sx={{
+                    marginTop: "3%",
+                    px: "2rem",
+                    py: "1rem",
+                    bgcolor: "#9155fd",
+                  }}
                 >
                   Add To Cart
                 </Button>
@@ -241,7 +269,7 @@ export default function ProductDetails() {
 
                 <div className="space-y-6">
                   <p className="text-base text-gray-900">
-                    {product.description}
+                    {products.product?.description}
                   </p>
                 </div>
               </div>
@@ -294,11 +322,7 @@ export default function ProductDetails() {
                 </div>
 
                 <Box className="mt-5 space-y-3">
-                  <Grid
-                    container
-                    alignItems="center"
-                    gap={2}
-                  >
+                  <Grid container alignItems="center" gap={2}>
                     <Grid item xs={2}>
                       <p>Excellent</p>
                     </Grid>
@@ -311,11 +335,7 @@ export default function ProductDetails() {
                       />
                     </Grid>
                   </Grid>
-                  <Grid
-                    container
-                    alignItems="center"
-                    gap={2}
-                  >
+                  <Grid container alignItems="center" gap={2}>
                     <Grid item xs={2}>
                       <p>Very Good</p>
                     </Grid>
@@ -328,11 +348,7 @@ export default function ProductDetails() {
                       />
                     </Grid>
                   </Grid>
-                  <Grid
-                    container
-                    alignItems="center"
-                    gap={2}
-                  >
+                  <Grid container alignItems="center" gap={2}>
                     <Grid item xs={2}>
                       <p>Good</p>
                     </Grid>
@@ -340,15 +356,16 @@ export default function ProductDetails() {
                       <LinearProgress
                         variant="determinate"
                         value={25}
-                        sx={{ bgcolor: "#d0d0d0", borderRadius: 4, height: 7,color:"yellow" }}
+                        sx={{
+                          bgcolor: "#d0d0d0",
+                          borderRadius: 4,
+                          height: 7,
+                          color: "yellow",
+                        }}
                       />
                     </Grid>
                   </Grid>
-                  <Grid
-                    container
-                    alignItems="center"
-                    gap={2}
-                  >
+                  <Grid container alignItems="center" gap={2}>
                     <Grid item xs={2}>
                       <p>Average</p>
                     </Grid>
@@ -361,11 +378,7 @@ export default function ProductDetails() {
                       />
                     </Grid>
                   </Grid>
-                  <Grid
-                    container
-                    alignItems="center"
-                    gap={2}
-                  >
+                  <Grid container alignItems="center" gap={2}>
                     <Grid item xs={2}>
                       <p>Poor</p>
                     </Grid>
@@ -386,10 +399,12 @@ export default function ProductDetails() {
 
         {/* Similar Products */}
         <section className="pt-10">
-            <h1 className="py-5 text-xl font-bold">Similar Products</h1>
-            <div className="flex flex-wrap space-y-5 justify-center">
-                {mens_kurta.map((item)=><HomeSectionCard product={item}/>)}
-            </div>
+          <h1 className="py-5 text-xl font-bold">Similar Products</h1>
+          <div className="flex flex-wrap space-y-5 justify-center">
+            {mens_kurta.map((item) => (
+              <HomeSectionCard product={item} />
+            ))}
+          </div>
         </section>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -11,7 +11,10 @@ import { Avatar, Button, Menu, MenuItem } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import logo from "../../../Assets/Images/logo.png"
 import { navigation } from "./navigation";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import AuthModal from "../../Auth/AuthModal";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, logout } from "../../../State/Auth/Action";
 
 
 function classNames(...classes) {
@@ -25,7 +28,9 @@ export default function Navigation() {
   const [anchorEl, setAnchorEl] = useState(null);
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
-
+  const {auth} = useSelector(store=>store)
+  const dispatch = useDispatch();
+  const location = useLocation();
   
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -46,10 +51,32 @@ export default function Navigation() {
     close();
   };
 
-  
+  useEffect(()=>{
+    if(jwt){
+      dispatch(getUser(jwt))     
+    }else{
+      dispatch(getUser())
+      
+    }
+    
+  },[jwt,auth.jwt])
+
+  useEffect(()=>{
+    if(auth.user){
+      handleClose()
+    }
+    if(location.pathname==="/login" || location.pathname==="/register"){
+      navigate(-1);
+    }
+  },[auth.user])
+
+  const handleLogout = () =>{
+    dispatch(logout())
+    handleCloseUserMenu()
+  }
 
   return (
-    <div className="bg-white pb-10">
+    <div className="pb-10">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -215,10 +242,8 @@ export default function Navigation() {
         </Dialog>
       </Transition.Root>
 
-      <header className="relative bg-white">
-        <p className="flex h-8 rounded-b-md items-center justify-center bg-blue-500 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Get free delivery on orders over $100
-        </p>
+      <header className="relative">
+      
 
         <nav aria-label="Top" className="mx-auto">
           <div className="border-b border-gray-200">
@@ -378,7 +403,7 @@ export default function Navigation() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {true ? (
+                  {auth.user?.firstName ? (
                     <div>
                       <Avatar
                         className="text-white"
@@ -393,7 +418,7 @@ export default function Navigation() {
                           cursor: "pointer",
                         }}
                       >
-                       R
+                       {auth.user?.firstName[0].toUpperCase()}
                       </Avatar>
                       {/* <Button
                         id="basic-button"
@@ -413,9 +438,10 @@ export default function Navigation() {
                           "aria-labelledby": "basic-button",
                         }}
                       >
+                        <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
                         <MenuItem onClick={()=>navigate("/account/order")}>My Orders
                         </MenuItem>
-                        <MenuItem>Logout</MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
                       </Menu>
                     </div>
                   ) : (
@@ -461,6 +487,7 @@ export default function Navigation() {
           </div>
         </nav>
       </header>
+      <AuthModal handleClose={handleClose} open={openAuthModal}/>
     </div>
   );
 }

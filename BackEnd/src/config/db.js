@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
-const mongodbUrl = "mongodb+srv://utkarshukani:wG2zWr6r9JW8fDwS@cluster0.8fncs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-
+const mongodbUrl = process.env.MONGODB_URI
+// mongoose.set('debug', true);
 const connectDB = ()=>{
     return mongoose.connect(mongodbUrl);
 }

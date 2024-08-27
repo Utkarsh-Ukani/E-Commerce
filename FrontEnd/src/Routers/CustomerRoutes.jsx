@@ -9,6 +9,7 @@ import Footer from '../Customer/components/Footer/Footer'
 import Checkout from '../Customer/components/Checkout/Checkout.jsx'
 import Order from '../Customer/components/Order/Order.jsx'
 import OrderDetails from '../Customer/components/Order/OrderDetails.jsx'
+import PaymentSuccess from '../Customer/components/Payment/PaymentSuccess.jsx'
 
 const CustomerRoutes = () => {
   return (
@@ -17,6 +18,8 @@ const CustomerRoutes = () => {
             <Navigation/>
         </div>
         <Routes>
+            <Route path='/login' element={<HomePage/>}/>
+            <Route path='/register' element={<HomePage/>}/>
             <Route path='/' element={<HomePage/>}/>
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/:levelOne/:levelTwo/:levelThree' element={<Product/>}/>
@@ -24,6 +27,7 @@ const CustomerRoutes = () => {
             <Route path='/checkout' element={<Checkout/>}/>
             <Route path='/account/order' element={<Order/>}/>
             <Route path='/account/order/:orderId' element={<OrderDetails/>}/>
+            <Route path='/payment/:orderId' element={<PaymentSuccess/>}/>
         </Routes>
         <div>
             <Footer/>

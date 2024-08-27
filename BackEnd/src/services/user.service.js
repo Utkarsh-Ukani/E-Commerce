@@ -26,7 +26,8 @@ const createUser = async (userData) => {
 
 const getUserById = async (userId) => {
   try {
-    const user = await User.findById(userId).populate("address");
+    const user = await User.findById(userId)
+    // .populate("address");
     if (!user) {
       throw new Error("user not found with id : ", userId);
     }
@@ -39,7 +40,7 @@ const getUserById = async (userId) => {
 
 const getUserByEmail = async (userEmail) => {
   try {
-    const user = await User.findOne({ userEmail });
+    const user = await User.findOne({ email:userEmail });
     if (!user) {
       throw new Error("user not found with email : ", userEmail);
     }
@@ -54,7 +55,7 @@ const getUserProfileByToken = async (token) => {
   try {
     const userId = jwtProvider.getUserIdFromToken(token);
 
-    const user = await findUserById(userId);
+    const user = (await getUserById(userId)).populate("address");
     if (!user) {
       throw new Error("user not found with id : ", userId);
     }
