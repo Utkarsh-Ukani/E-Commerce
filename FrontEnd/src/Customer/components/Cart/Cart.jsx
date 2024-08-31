@@ -20,7 +20,7 @@ const Cart = () => {
 
   return (
     <div>
-      <div className="lg:grid grid-cols-3 lg:px-16 relative">
+      <div className="lg:grid grid-cols-3 lg:px-16 relative mt-10">
         <div className="col-span-2">
           {cart.cart?.cartItems.map((item) => (
             <CartItem item={item} />

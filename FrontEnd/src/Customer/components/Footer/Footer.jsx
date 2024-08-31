@@ -3,11 +3,11 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div>
+    <div className="bg-gray-800">
       <Grid
-        className="bg-black text-white text-center mt-10"
+        className=" text-white text-center"
         container
-        sx={{ bgcolor: "black", color: "white", py: 3 }}
+        sx={{  color: "white", py: 3 }}
       >
         <Grid item xs={12} sm={6} md={3}>
           <Typography className="pb-5" variant="h6">

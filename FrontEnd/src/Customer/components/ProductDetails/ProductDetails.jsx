@@ -12,7 +12,7 @@ import { addItemToCart } from "../../../State/Cart/Action";
 
 
 const product = {
-  name: "Basic Tee 6-Pack",
+  name: "product",
   price: "$192",
   href: "#",
   breadcrumbs: [
@@ -76,6 +76,10 @@ export default function ProductDetails() {
     const data = { productId: params.productId };
     dispatch(findProductById(data));
   }, [params.productId]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleAddToCart = () => {
     const data = {productId:params.productId,size:selectedSize.name}
@@ -290,18 +294,11 @@ export default function ProductDetails() {
                 </div>
               </div>
 
-              <div className="mt-10">
-                <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
-                <div className="mt-4 space-y-6">
-                  <p className="text-sm text-gray-600">{product.details}</p>
-                </div>
-              </div>
             </div>
           </div>
         </section>
         {/* rating and reviews */}
-        <section>
+        <section className="mb-10">
           <h1 className="font-semibold text-lg pb-4">Recent Review & Rating</h1>
 
           <div className="border p-5">
@@ -398,14 +395,14 @@ export default function ProductDetails() {
         </section>
 
         {/* Similar Products */}
-        <section className="pt-10">
+        {/* <section className="pt-10">
           <h1 className="py-5 text-xl font-bold">Similar Products</h1>
           <div className="flex flex-wrap space-y-5 justify-center">
             {mens_kurta.map((item) => (
               <HomeSectionCard product={item} />
             ))}
           </div>
-        </section>
+        </section> */}
       </div>
     </div>
   );

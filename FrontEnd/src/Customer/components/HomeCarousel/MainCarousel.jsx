@@ -8,7 +8,7 @@ const MainCarousel = () => {
     <img
       src={item.image}
       alt=""
-      className="cursor-pointer"
+      className="cursor-pointer h-[80vh] w-[100vw]"
       role="presentation"
     />
   ));

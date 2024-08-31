@@ -1,6 +1,8 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import OrderCard from "./OrderCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllOrders } from "../../../State/Order/Action";
 
 const orderStatus = [
   { lable: "On The Way", value: "on_the_way" },
@@ -9,8 +11,16 @@ const orderStatus = [
   { lable: "Returned", value: "returned" },
 ];
 const Order = () => {
+  const dispatch = useDispatch();
+  const {order} = useSelector((store)=>store)
+
+
+  useEffect(()=>{
+    dispatch(getAllOrders())
+  },[])
+
   return (
-    <div className="px-5 lg:px-20 ">
+    <div className="px-5 lg:px-20 my-4 ">
       <Grid container sx={{ justifyContent: "space-between" }}>
         <Grid item xs={2.5}>
           <div className="h-auto shadow-lg bg-white p-5 sticky top-5">
@@ -38,8 +48,8 @@ const Order = () => {
         </Grid>
         <Grid item xs={9}>
           <div className="space-y-5">
-            {[1, 1, 1, 1, 1, 1].map((item) => (
-              <OrderCard />
+            {order.orders?.map((item) => (
+              <OrderCard order={item}/>
             ))}
           </div>
         </Grid>

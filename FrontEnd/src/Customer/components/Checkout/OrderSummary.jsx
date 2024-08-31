@@ -27,9 +27,9 @@ const OrderSummary = () => {
   return (
     <div>
       <div className="p-5 shadow-lg rounded-md border">
-        <AddressCard address={order.order?.shippingAddress} />
+        <AddressCard  address={order.order?.shippingAddress} />
       </div>
-      <div>
+      <div className="mt-6">
         <div className="lg:grid grid-cols-3  relative">
           <div className="col-span-2">
             {order.order?.orderItems?.map((item) => (

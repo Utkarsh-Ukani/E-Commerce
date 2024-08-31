@@ -10,6 +10,7 @@ import Checkout from '../Customer/components/Checkout/Checkout.jsx'
 import Order from '../Customer/components/Order/Order.jsx'
 import OrderDetails from '../Customer/components/Order/OrderDetails.jsx'
 import PaymentSuccess from '../Customer/components/Payment/PaymentSuccess.jsx'
+import Profile from '../Customer/Auth/Profile.jsx'
 
 const CustomerRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const CustomerRoutes = () => {
             <Route path='/account/order' element={<Order/>}/>
             <Route path='/account/order/:orderId' element={<OrderDetails/>}/>
             <Route path='/payment/:orderId' element={<PaymentSuccess/>}/>
+            <Route path='/user/profile' element={<Profile/>}/>
         </Routes>
         <div>
             <Footer/>

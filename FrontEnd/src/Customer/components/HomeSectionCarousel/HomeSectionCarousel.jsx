@@ -24,7 +24,7 @@ const HomeSectionCarousel = ({data,sectionName}) => {
   };
 
   const slideNext = () => {
-    if (activeIndex < items.length - 1) {
+    if (activeIndex < items?.length - 1) {
       console.log("Next Clicked, Active Index:", activeIndex);
       setActiveIndex(activeIndex + 1);
       carouselRef.current.slideNext(); // Use AliceCarousel's slideNext method
@@ -36,7 +36,7 @@ const HomeSectionCarousel = ({data,sectionName}) => {
     setActiveIndex(item);
   };
 
-  const items = data.slice(0,10).map((item) => <HomeSectionCard product={item} />);
+  const items = data?.slice(0,10).map((item) => <HomeSectionCard product={item} />);
   
   return (
     <div>
@@ -52,7 +52,7 @@ const HomeSectionCarousel = ({data,sectionName}) => {
           activeIndex={activeIndex}
           autoPlay={false}
         />
-        {activeIndex < items.length - 5 && (
+        {activeIndex < items?.length - 5 && (
           <Button
             className="z-50"
             onClick={slideNext}

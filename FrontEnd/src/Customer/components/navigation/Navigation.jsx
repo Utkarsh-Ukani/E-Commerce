@@ -15,6 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AuthModal from "../../Auth/AuthModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, logout } from "../../../State/Auth/Action";
+import { getCart } from "../../../State/Cart/Action";
 
 
 function classNames(...classes) {
@@ -29,6 +30,7 @@ export default function Navigation() {
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
   const {auth} = useSelector(store=>store)
+  const {cart} = useSelector(store=>store)
   const dispatch = useDispatch();
   const location = useLocation();
   
@@ -70,13 +72,18 @@ export default function Navigation() {
     }
   },[auth.user])
 
+  useEffect(()=>{
+    dispatch(getCart())
+  },[])
+
+
   const handleLogout = () =>{
     dispatch(logout())
     handleCloseUserMenu()
   }
 
   return (
-    <div className="pb-10">
+    <div className="bg-gray-800  pb-10">
       {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -242,7 +249,7 @@ export default function Navigation() {
         </Dialog>
       </Transition.Root>
 
-      <header className="relative">
+      <header className="relative shadow-md shadow-blue-300">
       
 
         <nav aria-label="Top" className="mx-auto">
@@ -263,6 +270,7 @@ export default function Navigation() {
                   <span className="sr-only">Your Company</span>
                   <img
                     src={logo}
+                    onClick={()=>navigate("/")}
                     alt="Shopwithzosh"
                     className="h-12 w-12 mr-2 bg-gray-400 rounded-full"
                   />
@@ -281,7 +289,7 @@ export default function Navigation() {
                               className={classNames(
                                 open
                                   ? "border-indigo-600 text-indigo-600"
-                                  : "border-transparent text-gray-700 hover:text-gray-800",
+                                  : "border-transparent text-white ",
                                 "relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
                               )}
                             >
@@ -438,7 +446,7 @@ export default function Navigation() {
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem onClick={handleCloseUserMenu}>Profile</MenuItem>
+                        <MenuItem onClick={()=>navigate("/user/profile")}>Profile</MenuItem>
                         <MenuItem onClick={()=>navigate("/account/order")}>My Orders
                         </MenuItem>
                         <MenuItem onClick={handleLogout}>Logout</MenuItem>
@@ -447,7 +455,7 @@ export default function Navigation() {
                   ) : (
                     <Button
                       onClick={handleOpen}
-                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                      className="text-sm font-medium text-white"
                     >
                       Signin
                     </Button>
@@ -457,7 +465,7 @@ export default function Navigation() {
                 {/* Search */}
                 <div className="flex items-center lg:ml-6">
                 
-                  <p className="p-2 text-gray-400 hover:text-gray-500">
+                  <p className="p-2 text-white">
                     <span className="sr-only">Search</span>
                     
                     <MagnifyingGlassIcon
@@ -470,14 +478,15 @@ export default function Navigation() {
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
                   <Button
+                    onClick={()=>navigate("/cart")}
                     className="group -m-2 flex items-center p-2"
                   >
                     <ShoppingBagIcon
-                      className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      className="h-6 w-6 flex-shrink-0 text-white"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      2
+                    <span className="ml-2 text-sm font-medium text-white">
+                      {cart.cart?.cartItems?.length}
                     </span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Button>
