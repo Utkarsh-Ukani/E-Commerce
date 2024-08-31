@@ -34,6 +34,7 @@ export default function Navigation() {
   const dispatch = useDispatch();
   const location = useLocation();
   
+  
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -465,7 +466,7 @@ export default function Navigation() {
                 {/* Search */}
                 <div className="flex items-center lg:ml-6">
                 
-                  <p className="p-2 text-white">
+                  <p className="p-2 text-white" onClick={()=>navigate("/search")}>
                     <span className="sr-only">Search</span>
                     
                     <MagnifyingGlassIcon

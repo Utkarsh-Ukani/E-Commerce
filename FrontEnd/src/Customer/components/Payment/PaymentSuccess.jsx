@@ -32,7 +32,7 @@ const PaymentSuccess = () => {
   }, [orderId, paymentId]);
 
   return (
-    <div className='px-2 lg:px-36'>
+    <div className='px-2 lg:px-36 my-4'>
       <div className='flex flex-col justify-center items-center'>
         <Alert variant='filled' severity='success' sx={{ mb: 6, width: "fit-content" }}>
           <AlertTitle>Payment Success</AlertTitle>

@@ -11,6 +11,7 @@ import { findProductById } from "../../../State/Product/Action";
 import { addItemToCart } from "../../../State/Cart/Action";
 
 
+
 const product = {
   name: "product",
   price: "$192",
@@ -18,24 +19,6 @@ const product = {
   breadcrumbs: [
     { id: 1, name: "Men", href: "#" },
     { id: 2, name: "Clothing", href: "#" },
-  ],
-  images: [
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
-      alt: "Two each of gray, white, and black shirts laying flat.",
-    },
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
-      alt: "Model wearing plain black basic tee.",
-    },
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
-      alt: "Model wearing plain gray basic tee.",
-    },
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg",
-      alt: "Model wearing plain white basic tee.",
-    },
   ],
   colors: [
     { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -48,16 +31,12 @@ const product = {
     { name: "L", inStock: true },
     { name: "XL", inStock: true },
   ],
-  description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
   highlights: [
     "Hand cut and sewn locally",
     "Dyed with our proprietary colors",
     "Pre-washed & pre-shrunk",
     "Ultra-soft 100% cotton",
   ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 };
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -81,6 +60,8 @@ export default function ProductDetails() {
     window.scrollTo(0, 0);
   }, []);
 
+  console.log(products.product);
+
   const handleAddToCart = () => {
     const data = {productId:params.productId,size:selectedSize.name}
     dispatch(addItemToCart(data))
@@ -89,7 +70,7 @@ export default function ProductDetails() {
   return (
     <div className="bg-white lg:px-20">
       <div className="pt-6">
-        <nav aria-label="Breadcrumb">
+        {/* <nav aria-label="Breadcrumb">
           <ol
             role="list"
             className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
@@ -126,7 +107,7 @@ export default function ProductDetails() {
               </a>
             </li>
           </ol>
-        </nav>
+        </nav> */}
 
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10 px-4 pt-10">
           {/* Image gallery */}
@@ -137,17 +118,6 @@ export default function ProductDetails() {
                 src={products.product?.imageUrl}
                 className="h-full w-full object-cover object-center"
               />
-            </div>
-            <div className="flex flex-wrap space-x-5 justify-center">
-              {product.images.map((item) => (
-                <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4">
-                  <img
-                    alt={item.alt}
-                    src={item.src}
-                    className="h-full w-full object-cover object-center"
-                  />
-                </div>
-              ))}
             </div>
           </div>
 
@@ -186,9 +156,9 @@ export default function ProductDetails() {
                     readOnly
                     precision={0.5}
                   />
-                  <p className="opacity-50 text-sm">56740 Ratings</p>
+                  <p className="opacity-50 text-sm">567 Ratings</p>
                   <p className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                    3870 Reviews
+                    38 Reviews
                   </p>
                 </div>
               </div>

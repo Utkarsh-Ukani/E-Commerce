@@ -27,7 +27,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b  from-blue-500 to-green-500">
+    <div className="bg-slate-200">
       <MainCarousel />
 
       <div className="space-y-10 py-20 flex flex-col justify-center px-5 lg:px-10">

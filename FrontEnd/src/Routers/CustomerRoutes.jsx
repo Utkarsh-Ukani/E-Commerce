@@ -11,6 +11,7 @@ import Order from '../Customer/components/Order/Order.jsx'
 import OrderDetails from '../Customer/components/Order/OrderDetails.jsx'
 import PaymentSuccess from '../Customer/components/Payment/PaymentSuccess.jsx'
 import Profile from '../Customer/Auth/Profile.jsx'
+import SearchPage from '../Customer/components/Search/SearchPage.jsx'
 
 const CustomerRoutes = () => {
   return (
@@ -30,6 +31,7 @@ const CustomerRoutes = () => {
             <Route path='/account/order/:orderId' element={<OrderDetails/>}/>
             <Route path='/payment/:orderId' element={<PaymentSuccess/>}/>
             <Route path='/user/profile' element={<Profile/>}/>
+            <Route path='/search' element={<SearchPage/>}/>
         </Routes>
         <div>
             <Footer/>

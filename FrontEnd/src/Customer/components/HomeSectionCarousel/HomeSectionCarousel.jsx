@@ -36,7 +36,7 @@ const HomeSectionCarousel = ({data,sectionName}) => {
     setActiveIndex(item);
   };
 
-  const items = data?.slice(0,10).map((item) => <HomeSectionCard product={item} />);
+  const items = data?.slice(0,20).map((item) => <HomeSectionCard product={item} />);
   
   return (
     <div>

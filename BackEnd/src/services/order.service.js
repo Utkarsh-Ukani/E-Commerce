@@ -114,6 +114,7 @@ async function usersOrderHistory(userId) {
 
 async function getAllOrders() {
   return await Order.find()
+    .populate("user")
     .populate({ path: "orderItems", populate: { path: "product" } })
     .lean();
 }
